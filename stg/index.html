@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIQUA Staging Test Site</title>
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #597059;
+            --bg-color: #f4f7f6;
+            --text-color: #333;
+        }
+
+        body {
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        h1, h2, h3 {
+            font-family: 'Helvetica', sans-serif;
+            color: #2d3e2b;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+        }
+
+        img {
+            max-width: 120px;
+            max-height: 120px;
+            margin: 10px;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: transform 0.2s, border-color 0.2s;
+            border-radius: 5px;
+        }
+
+        img:hover {
+            transform: scale(1.05);
+            border-color: var(--primary-color);
+        }
+
+        input[type=text], select {
+            width: 100%;
+            max-width: 300px;
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            display: block;
+        }
+
+        button {
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+        }
+
+        button:hover {
+            background: #3e4f3e;
+        }
+
+        .product-detail {
+            background: #f9f9f9;
+            padding: 10px;
+            margin-top: 10px;
+            border-left: 5px solid var(--secondary-color);
+            min-height: 50px;
+        }
+
+        .cookie-box {
+            font-size: 0.8em;
+            color: #666;
+            word-break: break-all;
+            background: #eee;
+            padding: 10px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1 aiq-tag="qg_title">[AIQUA] Melo Staging</h1>
+        <p>HELLO USER! This is a test environment for SDK tracking events.</p>
+
+        <div class="section">
+            <h3>Cookie Information</h3>
+            <div class="cookie-box">
+                <strong>Current Cookie:</strong> 
+                <script>document.write(document.cookie || "No cookies found.");</script>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>1. Trigger In-Web Campaign</h2>
+            <p>Select a campaign type and click the button to trigger:</p>
+            <select id="inweb_dropdown">
+                <option value="">-- Select --</option>
+                <option value="creative_studio">Creative Studio</option>
+                <option value="fixbanner">Fixbanner</option>
+                <option value="multi_image">Multiple Images</option>
+                <option value="multi_action">Multiple Actions</option>
+                <option value="lead_gen">Lead Generation</option>
+                <option value="subscription_boost">Subscription Boost</option>
+                <option value="html_editor">HTML Editor</option>
+                <option value="web_push">Web Push</option>
+            </select>
+            <button onclick="show_inweb()">Show In-Web Campaign</button>
+        </div>
+
+        <div class="section">
+            <h2>2. Your Information (Identify)</h2>
+            <label>Name:</label> <input type="text" id="name" placeholder="Leon">
+            <label>Phone No:</label> <input type="text" id="phone_no" placeholder="0912345678">
+            <label>Gender:</label>
+            <select id="gender">'
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+            <label>City:</label> <input type="text" id="city" placeholder="Taipei">
+            <label>Email:</label> <input type="text" id="email" placeholder="aa@abc.com">
+            <button onclick="submit_profile()">Send Profile to AIQUA</button>
+        </div>
+
+        <div class="section">
+            <h2>3. Product Browsing (product_viewed)</h2>
+            <div id="product_1_list">
+                <img id="ts" src="img/ts.png" alt="Taylor Swift" onclick="clickProduct(1, 'Taylor Swift', 1, 100, 'ts')">
+                <img id="fearless" src="img/fearless.png" alt="Fearless" onclick="clickProduct(1, 'Fearless', 2, 200, 'fearless')">
+                <img id="red" src="img/red.png" alt="Red" onclick="clickProduct(1, 'Red', 3, 400, 'red')">
+            </div>
+            <div class="product-detail" id="detail_1">No product selected.</div>
+            <button id="btn_1" style="margin-top:10px;">View Product</button>
+        </div>
+
+        <div class="section">
+            <h2>4. Wishlist (product_added_to_wishlist)</h2>
+            <div id="product_2_list">
+                <img id="lover" src="img/lover.png" alt="Lover" onclick="clickProduct(2, 'Lover', 1, 150, 'lover')">
+                <img id="folklore" src="img/folklore.png" alt="Folklore" onclick="clickProduct(2, 'Folklore', 2, 250, 'folklore')">
+            </div>
+            <div class="product-detail" id="detail_2">No product selected.</div>
+            <button id="btn_2" style="margin-top:10px;">Add to Wishlist</button>
+        </div>
+
+        <div class="section">
+            <h2>5. Purchase (product_purchased)</h2>
+            <div id="product_3_list">
+                <img id="x" src="img/x.png" alt="X" onclick="clickProduct(3, 'Album X', 1, 500, 'x')">
+                <img id="y" src="img/y.png" alt="Y" onclick="clickProduct(3, 'Album Y', 2, 600, 'y')">
+            </div>
+            <div class="product-detail" id="detail_3">No product selected.</div>
+            <button id="btn_3" style="margin-top:10px;">Purchase Now</button>
+        </div>
+
+        <div class="section">
+            <h2>6. Faith Value (Custom Event)</h2>
+            <p>Current Faith Value: <span id="faithValue" style="font-weight:bold; color:red;">100</span></p>
+            <input id="mySlider" type="range" min="1" max="10" value="1" step="1" oninput="updateFaith();" style="width:100%;">
+            <div id="img-wrapper" style="width:50px; height:50px; margin: 20px 0;">
+                <img src="Apple-logo.png" alt="Apple" id="myImage" style="width:100%; height:100%;" />
+            </div>
+            <button onclick="rechargeFaith()">Recharge Your Faith Value</button>
+        </div>
+
+    </div>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T6VHM7K419"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-T6VHM7K419');
+
+        // AIQUA qg Proxy
+        window.qg = window.qg || function() {
+            (window.qg.q = window.qg.q || []).push(arguments);
+            console.log("AIQUA Event Logged:", arguments);
+        };
+
+        // 1. In-Web
+        function show_inweb() {
+            var val = document.getElementById('inweb_dropdown').value;
+            if (val) {
+                qg("event", "showInweb", { "campaign_name": val });
+                console.log("InWeb campaign name: " + val);
+            }
+        }
+
+        // 2. Profile
+        function submit_profile() {
+            var name = document.getElementById("name").value;
+            var phone_no = document.getElementById("phone_no").value;
+            var gender = document.getElementById("gender").value;
+            var city = document.getElementById("city").value;
+            var email = document.getElementById("email").value;
+            
+            qg("identify", {
+                "name": name,
+                "phoneNo": phone_no,
+                "gender": gender,
+                "city": city,
+                "email": email
+            });
+            qg("event", "submit_profile");
+            alert('Profile Submitted!');
+        }
+
+        // 3-5. Generic Product Handler
+        function clickProduct(sectionNum, name, id, price, img_id) {
+            var detailId = "detail_" + sectionNum;
+            var btnId = "btn_" + sectionNum;
+            var eventNames = ["", "product_viewed", "product_added_to_wishlist", "product_purchased"];
+            var eventName = eventNames[sectionNum];
+            
+            document.getElementById(detailId).innerHTML = `<strong>Selected:</strong> ${name} <br> <strong>ID:</strong> ${id} <br> <strong>Price:</strong> $${price}`;
+            
+            var img_element = document.getElementById(img_id);
+            var img_url = img_element ? img_element.src : "";
+            
+            document.getElementById(btnId).onclick = function() {
+                console.log("Triggering event: " + eventName, new Date());
+                qg("event", eventName, { 
+                    "product_id": id, 
+                    "product_name": name, 
+                    "product_price": price, 
+                    "product_image_url": img_url 
+                }, price);
+                alert('Event: ' + eventName + ' Sent!');
+            };
+        }
+
+        // 6. Faith Value Slider
+        function updateFaith() {
+            var slider = document.getElementById('mySlider');
+            var valDisplay = document.getElementById('faithValue');
+            var wrapper = document.getElementById('img-wrapper');
+            
+            var faithVal = slider.value * 100;
+            valDisplay.textContent = faithVal;
+            
+            var newSize = 50 * slider.value;
+            wrapper.style.width = newSize + 'px';
+            wrapper.style.height = newSize + 'px';
+        }
+
+        function rechargeFaith() {
+            var slider = document.getElementById('mySlider');
+            var faithVal = parseInt(document.getElementById('faithValue').textContent);
+            qg("event", "recharge_faith_value", { 
+                "id": slider.value, 
+                "name": "apple", 
+                "faith_value": faithVal 
+            }, faithVal);
+            alert('Faith Recharged: ' + faithVal);
+        }
+    </script>
+</body>
+</html>
